@@ -51,7 +51,7 @@ app.get('/users', (req, res) => {
 })
 
 app.post('/users', async (req, res) => {
-    const salt = await bcrypt.genSalt(15);
+    const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(req.body.password, salt)
     const newUser = {
         is_admin: false,
