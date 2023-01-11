@@ -6,9 +6,9 @@ exports.up = function(knex) {
   return knex.schema.createTable('profiles', (table)=>{
     table.increments('id').primary();
     table.integer('user_id').references('users.id');
-    table.specificType('capeLightning', 'text ARRAY');
-    table.specificType('kscLightning', 'text ARRAY');
-    table.specificType('otherLightning', 'text ARRAY');
+    table.specificType('capeLightning', 'TEXT[]');
+    table.specificType('kscLightning', 'TEXT[]');
+    table.specificType('otherLightning', 'TEXT[]');
     table.boolean('CCSFSLightningToggle', true);
     table.boolean('KSCLightningToggle', true);
     table.boolean('OtherLightningToggle', true)
