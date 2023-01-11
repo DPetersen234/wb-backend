@@ -19,13 +19,19 @@ const {
     deleteStorm,
     deleteLightning,
     deleteWind,
-    getAllUserDataByUsername
+    getAllUserDataByUsername,
+    getProfileData,
+    updateProfileData,
+    createProfileData,
+    addNewProfile,
+    getProfileDataByUserId,
+    updateProfileByUserId
 } = require('./controllers');
 
 const bcrypt = require('bcryptjs');
 const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV || 'development']);
 
-const port = 8080;
+const port = 8081;
 
 const hashCompare = (input, hash) => {
 }
@@ -61,6 +67,7 @@ app.post('/users', async (req, res) => {
         LastName: req.body.lastName
     }
     addNewUser(newUser)
+        .then(()=>addNewProfile(newUser))
         .then((data) => {
             res.status(200).send({ message: "success" })
         })
@@ -73,9 +80,7 @@ app.post('/users/login', async (req, res) => {
                 bcrypt.compare(req.body.password, data[0].passwordHash, function (err, response) {
                     if (response == true) {
                         let newData = {
-                            user_name: data[0].user_name,
-                            FirstName: data[0].FirstName,
-                            LastName: data[0].LastName
+                            ...data[0]
                         }
                         res.status(200).send(newData)
                     } else {
@@ -197,8 +202,8 @@ app.get('/wind', (req, res) => {
 })
 
 app.patch('/wind', async (req, res) => {
-    console.log(req.body);
-    let newObj = { id: req.body.id, is_active: req.body.is_active, type: req.body.type, warning: req.body.warning, location: req.body.location, category: req.body.category, start: req.body.start, end: req.body.end, direction: req.body.direction, user_id:  1 }
+
+    let newObj = { id: req.body.id, is_active: req.body.is_active, type: req.body.type, warning: req.body.warning, location: req.body.location, category: req.body.category, start: req.body.start, end: req.body.end, direction: req.body.direction, user_id: 1 }
     updateWindData(newObj)
         .then((data) => res.status(201).send({ message: "success" }))
         .catch((err) => res.status(503).send(err))
@@ -215,10 +220,76 @@ app.delete('/wind', (req, res) => {
     if (req.body.is_active !== true && req.body.id !== undefined) {
         deleteWind(req)
             .then((data) => res.status(200).send('Wind WWA was successfully deleted'))
-            .catch((err) => res.status(404).json({ message: 'Wind WWA was unable to be deleted', err }))
+            .catch((err) => res.status(400).json({ message: 'Wind WWA was unable to be deleted', err }))
     } else {
         res.status(400).send('Wind WWA was unable to be deleted due to being active')
     }
+})
+
+app.get('/profiles', (req, res) => {
+    getProfileData(req)
+        .then((data) => res.status(200).send(data))
+        .catch((err) => res.status(404).json({ message: 'could not find profile data' }))
+})
+
+app.get('/profiles/:id', (req, res) => {
+    let { id } = req.params
+    getProfileDataByUserId(id)
+        .then((data) => res.status(200).send(data))
+        .catch((err) => res.status(400).json({ message: 'could not find data based on the user' }))
+})
+app.patch('/profiles/:id',  async (req, res) =>{
+    let {id} = req.params
+    let newObj = {
+        id: req.body.id,
+        user_id: req.body.user_id,
+        capeLightning: req.body.capeLightning,
+        kscLightning: req.body.kscLightning,
+        psfbLightning: req.body.psfbLightning,
+        capeWind: req.body.capeWind,
+        kscWind: req.body.kscWind,
+        psfbWind: req.body.psfbWind,
+        capeStorm: req.body.capeStorm,
+        kscStorm: req.body.kscStorm,
+        psfbStorm: req.body.psfbStorm,
+        mode: req.body.mode,
+        accessibility: req.body.accessibility
+    }
+   await updateProfileByUserId(newObj,id)
+    .then((data)=>res.status(200).send(data))
+    .catch((err)=>res.status(400).json({message:'profile could not be updated'}))
+})
+
+app.patch('/profiles', async (req, res) => {
+    let newObj = {
+        id: req.body.id,
+        user_id: req.body.user_id,
+        capeLightning: req.body.capeLightning,
+        kscLightning: req.body.kscLightning,
+        otherLightning: req.body.otherLightning,
+        CCSFSLightningToggle: req.body.CCSFSLightningToggle,
+        KSCLightningToggle: req.body.KSCLightningToggle,
+        OtherLightningToggle: req.body.OtherLightningToggle,
+        psfbLightningToggle: req.body.psfbLightningToggle,
+        capeWind: req.body.capeWind,
+        kscWind: req.body.kscWind,
+        psfbWind: req.body.psfbWind,
+        capeStorm: req.body.capeStorm,
+        kscStorm: req.body.kscStorm,
+        psfbStorm: req.body.psfbStorm,
+        windSplash: req.body.windSplash,
+        stormSplash: req.body.stormSplash,
+        mode: req.body.mode,
+        accessibility: req.body.accessibility
+    }
+    updateProfileData(newObj)
+        .then((data) => res.status(201).send({ message: 'successfully updated user preferences' }))
+        .catch((err) => res.status(400).json({ message: 'could not update user preferences' }))
+})
+app.post('/profiles', (req, res) => {
+    createProfileData(req)
+        .then((data) => res.status(201).send({ message: 'created new profile successfully' }))
+        .catch((err) => res.status(400).json({ message: 'could not create a new profile' }))
 })
 
 
