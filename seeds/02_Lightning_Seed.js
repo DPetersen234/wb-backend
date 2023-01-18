@@ -16,7 +16,7 @@ exports.seed = async function(knex) {
     {id: 8, is_active: false, type: 'Clear', location: 'KSC Industrial', category: 'N/A', start: '1900-01-01 00:00:01', end: '1900-01-01 00:00:02',  user_id: 3},
     {id: 9, is_active: false, type: 'Clear', location: 'Astrotech', category: 'N/A', start: '1900-01-01 00:00:01', end: '1900-01-01 00:00:02',  user_id: 3},
     {id: 10, is_active: false, type: 'Clear', location: 'CIDCO Park', category: 'N/A', start: '1900-01-01 00:00:01', end: '1900-01-01 00:00:02',  user_id: 3},
-    {id: 11, is_active: false, type: 'Clear', location: 'CX-36/46', category: 'N/A', start: '1900-01-01 00:00:01', end: '1900-01-01 00:00:02',  user_id: 3},
+    {id: 11, is_active: false, type: 'Clear', location: 'CX-36-46', category: 'N/A', start: '1900-01-01 00:00:01', end: '1900-01-01 00:00:02',  user_id: 3},
     {id: 12, is_active: false, type: 'Clear', location: 'Patrick SFB', category: 'N/A', start: '1900-01-01 00:00:01', end: '1900-01-01 00:00:02',  user_id: 3},
 
   ]);
