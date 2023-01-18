@@ -11,7 +11,7 @@ function addNewProfile (newUser) {
   return knex('profiles')
     .insert({
       user_id: id,
-      capeLightning: ["Cape Central", "CX-20/16/LZ", "CX-36/46", "CX-37/ASOC/PPF", "CX-40/41/SPOC", "Port"],
+      capeLightning: ["Cape Central", "CX-20-16-LZ", "CX-36-46", "CX-37-ASOC-PPF", "CX-40-41-SPOC", "Port"],
       kscLightning: ["KSC Industrial", "LC-39", "SLF"],
       otherLightning: ["Astrotech", "CIDCO Park"],
       CCSFSLightningToggle: true,
