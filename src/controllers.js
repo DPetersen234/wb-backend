@@ -199,6 +199,186 @@ function getEventLogData() {
         .on('locations.id', '=', 'id_locations')
     })
 }
+function getLightStatus() {
+  let lightning = knex('lightning').select('*')
+  let lightData 
+  let windData 
+  let dataString = '0000000000000000$0000000000000000#00000%000000&00000'
+
+  return lightning.then(data =>{
+    lightData = data
+    return knex('wind').select('*')
+  }).then(data => {
+    windData = data
+  }).then(()=>{
+    lightData.map((item) => {
+      if (item.type === 'Phase 1' && item.location === 'LC-39') {
+        dataString = setCharAt(dataString, 3, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'LC-39') {
+        dataString = setCharAt(dataString, 3, '1')
+        dataString = setCharAt(dataString, 20, '1')
+      } else if (item.type === 'Clear' && item.location === 'LC-39') {
+        dataString = setCharAt(dataString, 3, '0')
+        dataString = setCharAt(dataString, 20, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'Cape Central') {
+        dataString = setCharAt(dataString, 6, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'Cape Central') {
+        dataString = setCharAt(dataString, 6, '1')
+        dataString = setCharAt(dataString, 23, '1')
+      } else if (item.type === 'Clear' && item.location === 'Cape Central') {
+        dataString = setCharAt(dataString, 6, '0')
+        dataString = setCharAt(dataString, 23, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'CX-20-16-LZ') {
+        dataString = setCharAt(dataString, 12, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'CX-20-16-LZ') {
+        dataString = setCharAt(dataString, 12, '1')
+        dataString = setCharAt(dataString, 29, '1')
+      } else if (item.type === 'Clear' && item.location === 'CX-20-16-LZ') {
+        dataString = setCharAt(dataString, 12, '0')
+        dataString = setCharAt(dataString, 29, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'CX-37-ASOC-PPF') {
+        dataString = setCharAt(dataString, 5, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'CX-37-ASOC-PPF') {
+        dataString = setCharAt(dataString, 5, '1')
+        dataString = setCharAt(dataString, 22, '1')
+      } else if (item.type === 'Clear' && item.location === 'CX-37-ASOC-PPF') {
+        dataString = setCharAt(dataString, 5, '0')
+        dataString = setCharAt(dataString, 22, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'Port') {
+        dataString = setCharAt(dataString, 7, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'Port') {
+        dataString = setCharAt(dataString, 7, '1')
+        dataString = setCharAt(dataString, 24, '1')
+      } else if (item.type === 'Clear' && item.location === 'Port') {
+        dataString = setCharAt(dataString, 7, '0')
+        dataString = setCharAt(dataString, 24, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'CX-36-46') {
+        dataString = setCharAt(dataString, 10, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'CX-36-46') {
+        dataString = setCharAt(dataString, 10, '1')
+        dataString = setCharAt(dataString, 27, '1')
+      } else if (item.type === 'Clear' && item.location === 'CX-36-46') {
+        dataString = setCharAt(dataString, 10, '0')
+        dataString = setCharAt(dataString, 27, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'CX-40-41-SPOC') {
+        dataString = setCharAt(dataString, 4, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'CX-40-41-SPOC') {
+        dataString = setCharAt(dataString, 4, '1')
+        dataString = setCharAt(dataString, 21, '1')
+      } else if (item.type === 'Clear' && item.location === 'CX-40-41-SPOC') {
+        dataString = setCharAt(dataString, 4, '0')
+        dataString = setCharAt(dataString, 21, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'SLF') {
+        dataString = setCharAt(dataString, 1, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'SLF') {
+        dataString = setCharAt(dataString, 1, '1')
+        dataString = setCharAt(dataString, 18, '1')
+      } else if (item.type === 'Clear' && item.location === 'SLF') {
+        dataString = setCharAt(dataString, 1, '0')
+        dataString = setCharAt(dataString, 18, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'KSC Industrial') {
+        dataString = setCharAt(dataString, 2, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'KSC Industrial') {
+        dataString = setCharAt(dataString, 2, '1')
+        dataString = setCharAt(dataString, 19, '1')
+      } else if (item.type === 'Clear' && item.location === 'KSC Industrial') {
+        dataString = setCharAt(dataString, 2, '0')
+        dataString = setCharAt(dataString, 19, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'CIDCO Park') {
+        dataString = setCharAt(dataString, 11, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'CIDCO Park') {
+        dataString = setCharAt(dataString, 11, '1')
+        dataString = setCharAt(dataString, 28, '1')
+      } else if (item.type === 'Clear' && item.location === 'CIDCO Park') {
+        dataString = setCharAt(dataString, 11, '0')
+        dataString = setCharAt(dataString, 28, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'Astrotech') {
+        dataString = setCharAt(dataString, 9, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'Astrotech') {
+        dataString = setCharAt(dataString, 9, '1')
+        dataString = setCharAt(dataString, 26, '1')
+      } else if (item.type === 'Clear' && item.location === 'Astrotech') {
+        dataString = setCharAt(dataString, 9, '0')
+        dataString = setCharAt(dataString, 26, '0')
+      }
+      if (item.type === 'Phase 1' && item.location === 'Patrick SFB') {
+        dataString = setCharAt(dataString, 8, '1')
+        console.log('string', dataString)
+      } else if (item.type === 'Phase 2' && item.location === 'Patrick SFB') {
+        dataString = setCharAt(dataString, 8, '1')
+        dataString = setCharAt(dataString, 25, '1')
+      } else if (item.type === 'Clear' && item.location === 'Patrick SFB') {
+        dataString = setCharAt(dataString, 8, '0')
+        dataString = setCharAt(dataString, 25, '0')
+      }
+  })
+
+      windData.map((item) => {
+        if (item.category === '18 kt steady-state' && item.type === 'Advisory') {
+          dataString = setCharAt(dataString, (item.location === 'KSC' ? 34 : 40), '1')
+          console.log('dataString1', dataString)
+      }
+      else if (item.category === '22 kt steady-state' && item.type === 'Advisory') {
+          dataString = setCharAt(dataString, 41, '1')
+          console.log('dataString2', dataString)
+      }
+      else if (item.category === '25 kt observed' && item.type === 'Advisory') {
+          dataString = setCharAt(dataString, 47, '1')
+          console.log('dataString3', dataString)
+      }
+      else if (item.category === 'Strong Winds' && item.type === 'Warning') {
+          dataString = setCharAt(dataString, (item.location === 'KSC' ? 35 : item.location === 'CCSFS' ? 42 : 48), '1')
+          console.log('dataString4', dataString)
+      }
+      else if (item.category === 'Damaging Winds' && item.type === 'Warning') {
+          dataString = setCharAt(dataString, (item.location === 'KSC' ? 36 : item.location === 'CCSFS' ? 43 : 49), '1')
+          console.log('dataString5', dataString)
+      }
+      else if (item.category === '18 kt steady-state' && item.type === 'Clear') {
+          dataString = setCharAt(dataString, (item.location === 'KSC' ? 34 : 40), '0')
+          console.log('dataString6', dataString)
+      }
+      else if (item.category === '22 kt steady-state' && item.type === 'Clear') {
+          dataString = setCharAt(dataString, 41, '0')
+          console.log('dataString7', dataString)
+      }
+      else if (item.category === '25 kt observed' && item.type === 'Clear') {
+          dataString = setCharAt(dataString, 47, '0')
+          console.log('dataString3', dataString)
+      }
+      else if (item.category === 'Strong Winds' && item.type === 'Clear') {
+          dataString = setCharAt(dataString, (item.location === 'KSC' ? 35 : item.location === 'CCSFS' ? 42 : 48), '0')
+          console.log('dataString8', dataString)
+      }
+     else if (item.category === 'Damaging Winds' && item.type === 'Clear') {
+          dataString = setCharAt(dataString, (item.location === 'KSC' ? 36 : item.location === 'CCSFS' ? 43 : 49), '0')
+          console.log('dataString9', dataString)
+      }
+    })
+    return dataString
+  })
+}
 
 module.exports = {
   getLightningData,
@@ -223,5 +403,6 @@ module.exports = {
   createProfileData,
   addNewProfile,
   getProfileDataByUserId,
-  updateProfileByUserId
+  updateProfileByUserId,
+  getLightStatus
 };

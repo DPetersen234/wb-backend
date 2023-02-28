@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const {
+    getLightStatus,
     getStormData,
     getWindData,
     getLightningData,
@@ -290,6 +291,11 @@ app.post('/profiles', (req, res) => {
     createProfileData(req)
         .then((data) => res.status(201).send({ message: 'created new profile successfully' }))
         .catch((err) => res.status(400).json({ message: 'could not create a new profile' }))
+})
+app.get('/lights', (req,res) => {
+    getLightStatus()
+    .then(data => res.status(200).send(data))
+    .catch(err => res.status(400).send('failed to fetch light statuses'))
 })
 
 
